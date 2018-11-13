@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id 'maven'
+}
+
+group = "net.covers1624"
+archivesBaseName = "MCLGradlePlugin"
+version = "1.0-SNAPSHOT"
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenLocal()
+    jcenter()
+    maven { url "https://maven.covers1624.net/" }
+    maven { url "http://chickenbones.net/maven" }
+}
+
+dependencies {
+    compile gradleApi()
+    compile 'org.tukaani:xz:1.8'
+    compile 'org.apache.commons:commons-compress:1.18'
+    compile "net.covers1624:GradleStuff:1.0-SNAPSHOT"
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty("local_maven") || project.hasProperty("maven_pass")) {
+                if (project.hasProperty("maven_pass")) {
+                    println "Uploading to remote maven."
+                    repository(url: "https://maven_upload.covers1624.net/") {
+                        authentication(userName: "covers1624", password: project.getProperty("maven_pass"))
+                    }
+                } else {
+                    println "Uploading to local maven: ${local_maven}"
+                    repository(url: "file://${local_maven}")
+                }
+            } else {
+                println "Uplodaing to local maven: ${mavenLocal().url}"
+                repository(url: mavenLocal().url)
+            }
+            pom {
+                groupId = project.group
+                artifactId = project.archivesBaseName
+
+                project {
+                    name project.archivesBaseName
+                    packaging 'jar'
+                    description 'MCLGradlePlugin'
+                    url 'https://github.com/covers1624/MCLGradlePlugin'
+
+                    scm {
+                        url 'https://github.com/covers1624/MCLGradlePlugin'
+                        connection 'scm:git:git://github.com/covers1624/MCLGradlePlugin.git'
+                        developerConnection 'scm:git:git@github.com:covers1624/MCLGradlePlugin.git'
+                    }
+
+                    issueManagement {
+                        system 'github'
+                        url 'https://github.com/covers1624/MCLGradlePlugin/issues'
+                    }
+
+                    licenses {
+                        license {
+                            name "MIT"
+                            url 'https://opensource.org/licenses/MIT'
+                            distribution 'repo'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'covers1624'
+                            name 'covers1624'
+                            roles {
+                                role 'developer'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
