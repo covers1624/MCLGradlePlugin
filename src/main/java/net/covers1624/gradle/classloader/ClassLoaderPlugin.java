@@ -14,7 +14,6 @@ import org.gradle.api.tasks.bundling.Jar;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +57,8 @@ public class ClassLoaderPlugin implements Plugin<Project> {
             list.add("net.covers1624.classloader.resolvers.SimpleResolver");
             list.addAll(extension.getExtraResolvers());
             File f = new File(t.getTemporaryDir(), "net.covers1624.classloader.IResourceResolverFactory");
-            try(PrintStream stream = new PrintStream(f)) {
-                for(String str : list) {
+            try (PrintStream stream = new PrintStream(f)) {
+                for (String str : list) {
                     stream.println(str);
                 }
             } catch (FileNotFoundException e) {
@@ -68,7 +67,6 @@ public class ClassLoaderPlugin implements Plugin<Project> {
             jar.from(f, c -> c.into("META-INF/services"));
         });
         jar.dependsOn(task);
-
 
         jar.from(project.zipTree(mcl));
         jar.getManifest().getAttributes().put("Resolver-Path", extension.getResolverDirectory());
