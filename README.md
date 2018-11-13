@@ -1,4 +1,4 @@
-###MCLGradlePlugin
+### MCLGradlePlugin
 
 
 MCLGraldePlugin is part of ModularClassLoader, helping to simplify
@@ -25,11 +25,11 @@ mcl {
 }
 
 ```
-####Why those repositories?
+#### Why those repositories?
 - `https://maven.covers1624.net/` Is where this plugin is hosted.
 - `http://chickenbones.net/maven` A dependency is required from here.
 
-####How use? 
+#### How use? 
 `makePack` Controls if a your libraries and main jar will be placed
 inside a tar.xz file or not, `resolverDirectory` is the relative path
 to your main jar where you want libraries to live.
