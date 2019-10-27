@@ -56,7 +56,7 @@ public class ClassLoaderPlugin implements Plugin<Project> {
             List<String> list = new ArrayList<>();
             list.add("net.covers1624.classloader.resolvers.SimpleResolver");
             list.addAll(extension.getExtraResolvers());
-            File f = new File(t.getTemporaryDir(), "net.covers1624.classloader.IResourceResolverFactory");
+            File f = new File(t.getTemporaryDir(), "net.covers1624.classloader.api.IResourceResolverFactory");
             try (PrintStream stream = new PrintStream(f)) {
                 for (String str : list) {
                     stream.println(str);
